@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es2017",
+        "outDir": "./build",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "baseUrl": "src",
+        "paths": {
+            "@config/*": ["config/*"],
+            "@helpers/*": ["helpers/*"],
+            "@types/*": ["types/*"],
+            "@middlewares/*": ["middlewares/*"],
+        },
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    }
+}
