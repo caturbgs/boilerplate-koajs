@@ -1,68 +1,43 @@
-// import {log} from "./logger";
-// import {Context} from "koa";
-// import {Body} from "../interfaces/request";
+import { ERROR_HTTP_CODE } from "@constants/error";
+import { IBody } from "../types/request";
+import { log } from "./logger";
 
-// const errorTypeHttpCode = {
-//     QueryValidationError: 400,
-//     ParamsValidationError: 400,
-//     BodyValidationError: 400,
-//     InvalidRequest: 400,
-//     InvalidVerificationCode: 400,
-//     AuthenticationError: 401,
-// };
+interface IApplicationError {
+    type: string,
+    message: string,
+    httpCode?: number,
+    data?: IBody,
+    expected?: boolean,
+}
 
-// export const ERROR_CODE = {
-//     QueryValidationError: "QueryValidationError",
-//     ParamsValidationError: "ParamsValidationError",
-//     BodyValidationError: "BodyValidationError",
-//     InvalidRequest: "InvalidRequest",
-//     InvalidVerificationCode: "InvalidVerificationCode",
-//     AuthenticationError: "AuthenticationError",
-// };
+export class ApplicationError extends Error {
+    public type: string;
+    public httpCode: number;
+    public data?: IBody;
+    public expected: boolean;
 
-// interface ApplicationErrorArgument {
-//     type?: string,
-//     message: string,
-//     httpCode?: number,
-//     detail?: Body,
-//     expected?: boolean,
-//     requestID?: string,
-// }
+    constructor(obj: IApplicationError) {
+        super(obj.message);
+        this.type = obj.type;
+        this.name = obj.type ?? obj.message;
+        this.httpCode = obj.httpCode || ERROR_HTTP_CODE[obj.type] || 500;
+        this.data = obj.data;
+        this.expected = (typeof obj.expected === "undefined") ? true : !!obj.expected;
+    }
+}
 
-// export class ApplicationError extends Error {
-//     public type: string;
+export function isExpectedError(err: Error): boolean {
+    if (err instanceof ApplicationError) {
+        return err.expected;
+    }
 
-//     public httpCode: number;
+    return false;
+}
 
-//     public detail: Body;
-
-//     public expected: boolean;
-
-//     public requestID: string;
-
-//     constructor(obj: ApplicationErrorArgument) {
-//         super(obj.message);
-//         this.name = obj.type ?? obj.message;
-//         this.httpCode = obj.httpCode || errorTypeHttpCode[obj.type] || 500;
-//         this.detail = obj.detail || {};
-//         this.expected = (typeof obj.expected === "undefined") ? true : !!obj.expected;
-//         this.requestID = obj.requestID ?? "";
-//     }
-// }
-
-// export function isExpectedError(err: Error): boolean {
-//     if (err instanceof ApplicationError) {
-//         return err.expected;
-//     }
-
-//     return false;
-// }
-
-// export function errorHandler(err: Error, ctx: Context = null): void {
-//     if (isExpectedError(err)) {
-//         log.warn(err);
-//     } else {
-//         sentryLogger(err, ctx);
-//         log.error(err);
-//     }
-// }
+export function errorHandler(err: Error): void {
+    if (isExpectedError(err)) {
+        log.warn(err);
+    } else {
+        log.error(err);
+    }
+}

@@ -1,14 +1,14 @@
 import { createLogger } from "@helpers/logger";
 import { Context, Next } from "koa";
 
-const httpLog = createLogger("http", {
-    requestId: 'asasa'
-});
+const httpLog = createLogger("http");
 
 export default async function (ctx: Context, next: Next) {
     const startTime = new Date().getTime();
 
-    ctx.res.on("finish", () => {
+    await next();
+
+    ctx.res.on("close", () => {
         const duration = Date.now() - startTime;
 
         const message = `  --> ${ctx.request.method} ${ctx.request.originalUrl} ${ctx.status} ${duration}ms`;
@@ -29,6 +29,4 @@ export default async function (ctx: Context, next: Next) {
             httpLog.info(logObject, message);
         }
     });
-
-    next();
 };
