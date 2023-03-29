@@ -11,19 +11,11 @@ import { initializeRoutes } from './routes';
 const app = new Koa();
 const router = new Router();
 
+// Example of using custom middleware global
+// router.use(customMiddlewareGlobal());
+
 router.get('/', async (ctx) => {
     ctx.body = 'Server is running';
-    return;
-
-    // Example of using error handler
-    // throw new ApplicationError({
-    //     message: 'Bad request',
-    //     type: ERROR_CODE.InvalidRequest,
-    //     httpCode: 400,
-    // });
-
-    // Example of error handler with unexpected error
-    // throw new Error('Unexpected error');
 });
 
 // Middlewares
