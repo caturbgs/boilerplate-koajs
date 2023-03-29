@@ -1,0 +1,24 @@
+-- CreateTable
+CREATE TABLE `Post` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `body` VARCHAR(191) NOT NULL,
+    `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updatedAt` TIMESTAMP(6) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Comment` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `body` VARCHAR(191) NOT NULL,
+    `postId` INTEGER NOT NULL,
+    `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updatedAt` TIMESTAMP(6) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Comment` ADD CONSTRAINT `Comment_postId_fkey` FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

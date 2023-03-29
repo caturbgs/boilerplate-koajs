@@ -9,4 +9,10 @@ const paramsValidator = validator.params({
     id: { type: "number", positive: true, integer: true, convert: true }
 });
 
-export { pagingValidator, paramsValidator };
+const bodyValidator = validator.body({
+    name: { type: "string", min: 10, max: 255 },
+    email: { type: "email" },
+});
+
+export { pagingValidator, paramsValidator, bodyValidator };
+

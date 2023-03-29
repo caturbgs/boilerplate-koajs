@@ -1,3 +1,4 @@
+import { Prisma, prismaClient } from '@config/database';
 import Router from '@koa/router';
 import * as userValidator from 'validator/user';
 
@@ -7,9 +8,13 @@ const router = new Router();
 // router.use(customMiddlewarePerRoute());
 
 router.get('/', ...[userValidator.pagingValidator], async (ctx) => {
+    const data = await prismaClient.user.findMany();
+
     ctx.status = 200;
-    ctx.body = 'Get all users';
-    
+    ctx.body = {
+        message: 'Get all users',
+        data
+    };
 
     // Example of using error handler
     // throw new ApplicationError({
@@ -25,6 +30,22 @@ router.get('/', ...[userValidator.pagingValidator], async (ctx) => {
 router.get('/:id', ...[userValidator.paramsValidator, userValidator.pagingValidator], async (ctx) => {
     ctx.status = 200;
     ctx.body = 'Get detail user';
+});
+
+router.post('/', ...[userValidator.bodyValidator], async (ctx) => {
+    const { name, email } = ctx.request.body as Prisma.userCreateInput;
+
+    const data = await prismaClient.user.create({
+        data: {
+            name: name,
+            email: email,
+        }
+    });
+
+    ctx.status = 200;
+    ctx.body = {
+        message: 'Success create user',
+    };
 });
 
 export default router;
