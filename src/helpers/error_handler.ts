@@ -1,19 +1,12 @@
 import { ERROR_HTTP_CODE } from "@constants/error";
-import { IBody } from "../types/request";
+import { IApplicationError } from "@interface/error";
+import { IBody } from "@interface/request";
 import { log } from "./logger";
-
-interface IApplicationError {
-    type: string,
-    message: string,
-    httpCode?: number,
-    data?: IBody,
-    expected?: boolean,
-}
 
 export class ApplicationError extends Error {
     public type: string;
     public httpCode: number;
-    public data?: IBody;
+    public data?: IBody | any;
     public expected: boolean;
 
     constructor(obj: IApplicationError) {

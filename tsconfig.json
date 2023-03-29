@@ -18,7 +18,7 @@
         "paths": {
             "@config/*": ["config/*"],
             "@helpers/*": ["helpers/*"],
-            "@types/*": ["types/*"],
+            "@interface/*": ["interface/*"],
             "@middlewares/*": ["middlewares/*"],
             "@constants/*": ["constants/*"],
         },

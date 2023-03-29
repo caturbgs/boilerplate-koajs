@@ -1,4 +1,4 @@
-import { IErrorCode, IHttpErrorCode } from "../types/error";
+import { IErrorCode, IHttpErrorCode } from "@interface/error";
 
 const ERROR_HTTP_CODE: IHttpErrorCode = {
     QueryValidationError: 400,
@@ -19,3 +19,4 @@ const ERROR_CODE: IErrorCode = {
 };
 
 export { ERROR_HTTP_CODE, ERROR_CODE };
+
