@@ -36,6 +36,7 @@ export default async function (ctx: Context, next: Next) {
                 ctx.body = {
                     message: err.message,
                     type: err.name,
+                    data: err.data,
                 };
 
                 return;
