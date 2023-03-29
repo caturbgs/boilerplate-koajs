@@ -1,8 +1,8 @@
-import * as Router from '@koa/router';
-import * as fs from "fs";
+import Router from '@koa/router';
+import { readdir } from "fs/promises";
 
 export async function initializeRoutes(router: Router) {
-    const routes = (await fs.promises.readdir((__dirname)))
+    const routes = (await readdir((__dirname)))
         .filter(it => it.endsWith(".ts"))
         .filter(it => it !== "index.ts")
         .map(it => it.replace(".ts", ""));
