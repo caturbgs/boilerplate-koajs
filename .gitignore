@@ -80,7 +80,7 @@ typings/
 dist
 
 # production
-build
+#build
 
 # Gatsby files
 .cache/

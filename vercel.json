@@ -3,11 +3,11 @@
   "name": "boilerplate-koajs",
   "builds": [
     {
-      "src": "src/index.js",
+      "src": "build/index.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "src/**"
+          "build/**"
         ]
       }
     }
@@ -15,7 +15,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/index.js"
+      "dest": "build/index.js"
     }
   ]
 }
