@@ -2,11 +2,11 @@
     "compilerOptions": {
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es6",
-//        "lib": [
-//            "es6",
-//            "esnext.asynciterable"
-//        ],
+        "target": "es2018",
+        "lib": [
+            "es2018",
+            "esnext.asynciterable"
+        ],
         "outDir": "./build",
         "sourceMap": true,
         "strict": true,
@@ -25,6 +25,9 @@
     },
     "include": [
         "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
     ],
     "ts-node": {
         "require": ["tsconfig-paths/register"]
