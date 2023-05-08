@@ -1,4 +1,4 @@
-import { Prisma, prismaClient } from '@config/database';
+import { Users } from '@interface/user';
 import Router from '@koa/router';
 import * as userValidator from 'validator/user';
 
@@ -8,7 +8,7 @@ const router = new Router();
 // router.use(customMiddlewarePerRoute());
 
 router.get('/', ...[userValidator.pagingValidator], async (ctx) => {
-    const data = await prismaClient.user.findMany();
+    const data: Users[] = [];
 
     ctx.status = 200;
     ctx.body = {
@@ -33,14 +33,9 @@ router.get('/:id', ...[userValidator.paramsValidator, userValidator.pagingValida
 });
 
 router.post('/', ...[userValidator.bodyValidator], async (ctx) => {
-    const { name, email } = ctx.request.body as Prisma.userCreateInput;
+    // const { name, email } = ctx.request.body as Prisma.userCreateInput;
 
-    const data = await prismaClient.user.create({
-        data: {
-            name: name,
-            email: email,
-        }
-    });
+    // const data = ;
 
     ctx.status = 200;
     ctx.body = {
