@@ -22,6 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -31,7 +40,7 @@ const userValidator = __importStar(require("validator/user"));
 const router = new router_1.default();
 // Example of using custom middleware per route
 // router.use(customMiddlewarePerRoute());
-router.get('/', ...[userValidator.pagingValidator], async (ctx) => {
+router.get('/', ...[userValidator.pagingValidator], (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     const data = [];
     ctx.status = 200;
     ctx.body = {
@@ -46,18 +55,18 @@ router.get('/', ...[userValidator.pagingValidator], async (ctx) => {
     // });
     // Example of error handler with unexpected error
     // throw new Error('Unexpected error');
-});
-router.get('/:id', ...[userValidator.paramsValidator, userValidator.pagingValidator], async (ctx) => {
+}));
+router.get('/:id', ...[userValidator.paramsValidator, userValidator.pagingValidator], (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     ctx.status = 200;
     ctx.body = 'Get detail user';
-});
-router.post('/', ...[userValidator.bodyValidator], async (ctx) => {
+}));
+router.post('/', ...[userValidator.bodyValidator], (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     // const { name, email } = ctx.request.body as Prisma.userCreateInput;
     // const data = ;
     ctx.status = 200;
     ctx.body = {
         message: 'Success create user',
     };
-});
+}));
 exports.default = router;
 //# sourceMappingURL=users.js.map

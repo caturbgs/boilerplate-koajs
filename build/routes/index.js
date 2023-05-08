@@ -22,18 +22,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializeRoutes = void 0;
 const promises_1 = require("fs/promises");
-async function initializeRoutes(router) {
-    const routes = (await (0, promises_1.readdir)((__dirname)))
-        .filter(it => it.endsWith(".ts"))
-        .filter(it => it !== "index.ts")
-        .map(it => it.replace(".ts", ""));
-    for (const route of routes) {
-        const moduleRouter = await Promise.resolve(`${`${__dirname}/${route}`}`).then(s => __importStar(require(s)));
-        router.use(`/${route}`, moduleRouter.default.routes(), moduleRouter.default.allowedMethods());
-    }
+function initializeRoutes(router) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const routes = (yield (0, promises_1.readdir)((__dirname)))
+            .filter(it => it.endsWith(".ts"))
+            .filter(it => it !== "index.ts")
+            .map(it => it.replace(".ts", ""));
+        for (const route of routes) {
+            const moduleRouter = yield Promise.resolve(`${`${__dirname}/${route}`}`).then(s => __importStar(require(s)));
+            router.use(`/${route}`, moduleRouter.default.routes(), moduleRouter.default.allowedMethods());
+        }
+    });
 }
 exports.initializeRoutes = initializeRoutes;
 //# sourceMappingURL=index.js.map
